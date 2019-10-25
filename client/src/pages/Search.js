@@ -15,10 +15,10 @@ class Search extends Component {
                 <Row>
                     <h1>Book Search</h1>
                     <h3>Search</h3>
-                    <Form>
-                        <input></input>
-                        <button></button>
-                    </Form>
+                    <form>
+                        <Input></Input>
+                        <Button></Button>
+                    </form>
                 </Row>
                 <Row>
                     <List>
