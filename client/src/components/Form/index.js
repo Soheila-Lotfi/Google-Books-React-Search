@@ -9,5 +9,5 @@ export function Input(props) {
 }
 
 export function Button(props) {
-    <button {...props} >Search</button>
+    <button {...props} >{props.children}</button>
 }
