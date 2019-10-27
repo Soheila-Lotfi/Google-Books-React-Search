@@ -1,13 +1,13 @@
-import React from React;
+import React from "react";
 
 
 export function Input(props) {
-
-    <input {...props}>
+    return <input {...props}>
     </input>
+
 
 }
 
-export function Button(props) {
-    <button {...props} >{props.children}</button>
+export function Formbtn(props) {
+    return <button {...props} >{props.children}</button>
 }

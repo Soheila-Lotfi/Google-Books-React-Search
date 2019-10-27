@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 
 function Nav() {
   return (
@@ -6,7 +7,7 @@ function Nav() {
       <a className="navbar-brand" href="/">
         Google Books
       </a>
-      <a className="navbar-brand" href="/Search">
+      <a className="navbar-brand" href="/searchbook">
         Search
       </a>
       <a className="navbar-brand" href="/Saved">
