@@ -9,7 +9,8 @@ class Searchbook extends Component {
 
     state = {
         search: "",
-        results: []
+        results: [],
+        savedResult: {}
 
 
     };
@@ -26,6 +27,20 @@ class Searchbook extends Component {
         API.getBooks(this.state.search).then(res => this.setState({ results: res.data.items })).catch(error => console.log(error));
 
     }
+
+    handleSaveButton = result => {
+  
+
+        API.saveBook({
+            "authors": result.volumeInfo.authors,
+            "description": result.volumeInfo.description,
+            "image": result.volumeInfo.imageLinks.smallThumbnail,
+            "link": result.volumeInfo.infoLink,
+            "title": result.volumeInfo.title
+
+        }).then(res => console.log(res)).catch(error => console.log(error));
+    }
+
     render() {
         return (
             <Container>
@@ -61,14 +76,15 @@ class Searchbook extends Component {
 
                                             <Col size="sm-8">
                                                 <h1>{result.volumeInfo.title}</h1>
-                                                <h2>Written by </h2>
+                                                <h2>Written by {result.volumeInfo.authors}</h2>
+                                                {/* <div>Written by<ul>{result.volumeInfo.authors.map(item=> <li key={item}>{item}</li>)}</ul></div> */}
 
-                                                <h3>{result.volumeInfo.title}</h3>
+
                                             </Col>
 
                                             <Col size="sm-4">
-                                                <FormBtn>View</FormBtn>
-                                                <FormBtn>Save</FormBtn>
+                                                <button className="btn"> <a href={result.volumeInfo.infoLink}>View</a></button>
+                                                <button className="btn" onClick={() => this.handleSaveButton(result)}>Save</button>
                                             </Col>
                                         </Row>
 
@@ -96,79 +112,6 @@ class Searchbook extends Component {
             </Container>
         )
     }
-
-    // render() {
-
-    //     return (
-
-    //         <Container fluid>
-
-    //             <Row>
-    //                 <Col size="sm-12">
-    //                     <h1>Book Search</h1>
-    //                     <h3>Search</h3>
-    //                     <form>
-    //                         <Input
-    //                             value={this.state.search}
-    //                             type="text"
-    //                             placeholder="Book title"
-    //                             onChange={this.handleInputChange}
-    //                             name="searchBook">
-    //                         </Input>
-    //                         <Formbtn
-    //                             type="submit"
-    //                             onClick={this.handleSubmitForm}>Search</Formbtn>
-    //                     </form>
-    //                 </Col>
-
-    //             </Row>
-    //             {/* <Row>
-    //                 {this.state.results.length ? (
-    //                     <List>
-    //                         {this.state.results.map(result => {
-    //                             <ListItem key={result.id}>
-
-    //                                 <Row>
-
-    //                                     <Col size="sm-8">
-    //                                         <h1>{result.volumeInfo.title}</h1>
-    //                                         <h2>Written by </h2>
-
-    //                                         <h3>{result.volumeInfo.title}</h3>
-    //                                     </Col>
-
-    //                                     <Col size="sm-4">
-    //                                         <Button>View</Button>
-    //                                         <Button>Save</Button>
-    //                                     </Col>
-    //                                 </Row>
-
-    //                                 <Row>
-    //                                     <Col size="sm-4">
-    //                                         <img src={this.state.results.volumeInfo.imageLinks.smallThumbnail}></img>
-    //                                     </Col>
-    //                                     <Col size="sm-8">
-    //                                         <p>{this.state.results.volumeInfo.descripton}</p>
-    //                                     </Col>
-    //                                 </Row>
-    //                             </ListItem>
-
-    //                         })}
-
-    //                     </List>) : (
-    //                         <ListItem>No Results Found :( Try again!</ListItem>)}
-    //             </Row> */}
-
-
-    //         </Container>
-
-
-
-
-    //     );
-
-    // }
-
 
 }
 
