@@ -24,17 +24,31 @@ class Searchbook extends Component {
 
     handleFormSubmit = event => {
         event.preventDefault();
-        API.getBooks(this.state.search).then(res => this.setState({ results: res.data.items })).catch(error => console.log(error));
+        API.getBooks(this.state.search).then(res => {
+            console.log(res.data.items)
+            if (res.data.items.length > 0) {
+                this.setState({ results: res.data.items })
+            }
+
+        }).catch(error => console.log(error));
+
+
 
     }
 
     handleSaveButton = result => {
-  
+        var image;
+        if (!result.volumeInfo.hasOwnProperty('imageLinks')) {
+            image = "https://via.placeholder.com/150"
 
+        }
+        else {
+            image = result.volumeInfo.imageLinks.smallThumbnail
+        }
         API.saveBook({
             "authors": result.volumeInfo.authors,
             "description": result.volumeInfo.description,
-            "image": result.volumeInfo.imageLinks.smallThumbnail,
+            "image": image,
             "link": result.volumeInfo.infoLink,
             "title": result.volumeInfo.title
 
@@ -43,7 +57,8 @@ class Searchbook extends Component {
 
     render() {
         return (
-            <Container>
+            <Container fluid>
+
                 <Row>
                     <Col size="sm-12">
                         <h1>Book Search</h1>
@@ -67,6 +82,7 @@ class Searchbook extends Component {
                 </Row>
                 <Row>
                     <Col size="sm-12">
+                        {console.log("this is" + this.state.results)}
                         {this.state.results.length ? (
                             <List>
                                 {this.state.results.map(result => (
@@ -75,22 +91,29 @@ class Searchbook extends Component {
                                         <Row>
 
                                             <Col size="sm-8">
-                                                <h1>{result.volumeInfo.title}</h1>
-                                                <h2>Written by {result.volumeInfo.authors}</h2>
-                                                {/* <div>Written by<ul>{result.volumeInfo.authors.map(item=> <li key={item}>{item}</li>)}</ul></div> */}
+                                                <h4>{result.volumeInfo.title}</h4>
+
+                                                {/*  if authors exits , join the items of the authors array and display it on the page, otherwise show nothing */}
+                                                {result.volumeInfo.authors ?
+                                                    (<span>written By:  {result.volumeInfo.authors.join(" , ")}</span>) :
+                                                    (<span></span>)}
 
 
                                             </Col>
 
                                             <Col size="sm-4">
-                                                <button className="btn"> <a href={result.volumeInfo.infoLink}>View</a></button>
-                                                <button className="btn" onClick={() => this.handleSaveButton(result)}>Save</button>
+                                                <button className="btn float-right ml-3" onClick={() => this.handleSaveButton(result)}>Save</button>
+                                                <button className="btn float-right"> <a style={{ color: "black" }} href={result.volumeInfo.infoLink}>View</a></button>
+
                                             </Col>
                                         </Row>
 
                                         <Row>
                                             <Col size="sm-4">
-                                                <img alt="Book" src={result.volumeInfo.imageLinks.smallThumbnail}></img>
+                                                {/* some of the items dont have imagelinks property, we check it with hasOwnProperty */}
+                                                {result.volumeInfo.hasOwnProperty('imageLinks') ?
+                                                    (<img alt={result.volumeInfo.title} style={{ width: "100px", height: "150px", marginTop: "30px" }} src={result.volumeInfo.imageLinks.smallThumbnail}></img>) : (<img alt={result.volumeInfo.title} style={{ width: "100px", height: "150px", marginTop: "30px" }} src="https://via.placeholder.com/150"></img>)}
+
                                             </Col>
                                             <Col size="sm-8">
                                                 <p>{result.volumeInfo.description}</p>

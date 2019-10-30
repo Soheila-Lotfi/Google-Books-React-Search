@@ -7,10 +7,10 @@ function Nav() {
       <a className="navbar-brand" href="/">
         Google Books
       </a>
-      <a className="navbar-brand" href="/searchbook">
+      <a  style={{position:"absolute", right:"80px"}} className="navbar-brand" href="/searchbook">
         Search
       </a>
-      <a className="navbar-brand" href="/Saved">
+      <a style={{position:"absolute", right:0}} className="navbar-brand" href="/Saved">
         Saved
       </a>
 
