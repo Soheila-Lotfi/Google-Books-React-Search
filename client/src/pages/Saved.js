@@ -4,8 +4,6 @@ import { Container, Row, Col } from "../components/Grid";
 import { List, ListItem } from "../components/List";
 
 
-
-
 class Saved extends Component {
 
     state = {
@@ -49,8 +47,8 @@ class Saved extends Component {
                                                 </Col>
 
                                                 <Col size="sm-4">
-                                                    <button className="btn float-right ml-3" onClick={() => this.deleteBtn(result._id)}>Delete</button>
-                                                    <button className="btn float-right"> <a style={{ color: "black" }} href={result.link}>View</a></button>
+                                                    <button className="btn float-right ml-3" style={{ color: "black", backgroundColor:"#f4cd23" }} onClick={() => this.deleteBtn(result._id)}>Delete</button>
+                                                    <button className="btn float-right" style={{ color: "black", backgroundColor:"#f4cd23" }}> <a style={{ color: "black" }} href={result.link}>View</a></button>
 
                                                 </Col>
                                             </Row>

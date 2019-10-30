@@ -14,7 +14,7 @@ class Searchbook extends Component {
 
 
     };
-
+    // get the user input by handleInputChange function
     handleInputChange = event => {
         const { name, value } = event.target;
         this.setState({
@@ -22,6 +22,7 @@ class Searchbook extends Component {
         });
     };
 
+    //get the books from the google book api 
     handleFormSubmit = event => {
         event.preventDefault();
         API.getBooks(this.state.search).then(res => {
@@ -32,11 +33,13 @@ class Searchbook extends Component {
 
         }).catch(error => console.log(error));
 
-
-
     }
-
+    //  save the book in database
     handleSaveButton = result => {
+
+        // some of the result coming back from the google book api donot have image, 
+        // if they dont have image, we define the src to prevent having errors
+
         var image;
         if (!result.volumeInfo.hasOwnProperty('imageLinks')) {
             image = "https://via.placeholder.com/150"
@@ -58,11 +61,10 @@ class Searchbook extends Component {
     render() {
         return (
             <Container fluid>
-
                 <Row>
                     <Col size="sm-12">
-                        <h1>Book Search</h1>
-                        <h3>Search</h3>
+                        <h3 style={{ fontFamily: "Montserrat" }}>Book Search</h3>
+                        <h5 style={{ fontFamily: "Montserrat", marginTop: "20px" }}>Search</h5>
                         <form>
                             <Input
                                 value={this.state.search}
@@ -82,7 +84,6 @@ class Searchbook extends Component {
                 </Row>
                 <Row>
                     <Col size="sm-12">
-                        {console.log("this is" + this.state.results)}
                         {this.state.results.length ? (
                             <List>
                                 {this.state.results.map(result => (
@@ -102,15 +103,15 @@ class Searchbook extends Component {
                                             </Col>
 
                                             <Col size="sm-4">
-                                                <button className="btn float-right ml-3" onClick={() => this.handleSaveButton(result)}>Save</button>
-                                                <button className="btn float-right"> <a style={{ color: "black" }} href={result.volumeInfo.infoLink}>View</a></button>
+                                                <button className="btn float-right ml-3" style={{ color: "black", backgroundColor: "#f4cd23" }} onClick={() => this.handleSaveButton(result)}>Save</button>
+                                                <button className="btn float-right" style={{ color: "black", backgroundColor: "#f4cd23" }}> <a style={{ color: "black" }} href={result.volumeInfo.infoLink}>View</a></button>
 
                                             </Col>
                                         </Row>
 
                                         <Row>
                                             <Col size="sm-4">
-                                                {/* some of the items dont have imagelinks property, we check it with hasOwnProperty */}
+                                                {/* some of the items don't have imagelinks property, we check it with hasOwnProperty */}
                                                 {result.volumeInfo.hasOwnProperty('imageLinks') ?
                                                     (<img alt={result.volumeInfo.title} style={{ width: "100px", height: "150px", marginTop: "30px" }} src={result.volumeInfo.imageLinks.smallThumbnail}></img>) : (<img alt={result.volumeInfo.title} style={{ width: "100px", height: "150px", marginTop: "30px" }} src="https://via.placeholder.com/150"></img>)}
 
