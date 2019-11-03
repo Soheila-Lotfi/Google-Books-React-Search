@@ -3,7 +3,7 @@ import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import Searchbook from "./pages/Searchbook";
 import Saved from "./pages/Saved";
 import NoMatch from "./pages/NoMatch";
-import Nav from "./components/Nav";
+import Header from "./components/Header";
 import Jumbotron from "./components/Jumbotron";
 
 
@@ -11,7 +11,7 @@ function App() {
     return (
         <Router>
             <div>
-                <Nav />
+                <Header />
                 <Jumbotron />
                 <Switch>
                     <Route exact path="/" component={Searchbook} />
@@ -19,7 +19,7 @@ function App() {
                     <Route exact path="/saved" component={Saved} />
                     <Route component={NoMatch} />
                 </Switch>
-          
+
             </div>
         </Router>
     )
